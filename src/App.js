@@ -1,12 +1,17 @@
 import React from 'react';
-import LoginForm from './components/LoginForm';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import LoginForm from './components/pages/LoginForm';
+import ForgotPinRegistration from './components/pages/ForgotPinRegistration';
 
 const App = () => {
   return (
-    <div className="App">
-      <h1>Форма авторизации</h1>
-      <LoginForm />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LoginForm />} />
+        <Route path="/forgot-pin-registration" element={<ForgotPinRegistration />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </Router>
   );
 };
 

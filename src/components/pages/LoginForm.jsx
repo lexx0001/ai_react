@@ -1,14 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
+    const navigate = useNavigate(); // Используем useNavigate() для получения функции навигации
     const [email, setEmail] = useState('');
     const [pin, setPin] = useState('');
     const emailInputRef = useRef(null);
 
     useEffect(() => {
-        // Устанавливаем фокус на поле ввода электронной почты при загрузке формы
         emailInputRef.current.focus();
-    }, []); // Пустой массив зависимостей, чтобы useEffect вызывался только один раз при загрузке компонента
+    }, []);
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
@@ -21,17 +22,16 @@ const LoginForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            console.log('Отправляем email:', email); // Вывод в консоль отправляемого email
-            console.log('Отправляем pin:', pin); // Вывод в консоль отправляемого PIN
+            console.log('Отправляем email:', email);
+            console.log('Отправляем pin:', pin);
 
-            const formData = new FormData(); // Создаем новый объект FormData
-            formData.append('email', email); // Добавляем значение email в объект FormData
-            formData.append('pin', pin); // Добавляем значение PIN в объект FormData
+            const formData = new FormData();
+            formData.append('email', email);
+            formData.append('pin', pin);
 
-            // Отправляем данные на сервер
             const response = await fetch('/emaillog', {
                 method: 'POST',
-                body: formData // Передаем объект FormData в качестве тела запроса
+                body: formData
             });
 
             if (!response.ok) {
@@ -44,6 +44,9 @@ const LoginForm = () => {
         }
     };
 
+    const handleForgotPinRegistration = () => {
+        navigate('/forgot-pin-registration'); // Перенаправляем пользователя на /forgot-pin-registration
+    };
 
     return (
         <form onSubmit={handleSubmit}>
@@ -55,22 +58,26 @@ const LoginForm = () => {
                     value={email}
                     pattern='[^\s@]+@[^\s@]+\.[^\s@]+'
                     onChange={handleEmailChange}
-                    required // поле обязательно для ввода
-                    ref={emailInputRef} // ссылка на поле ввода email
+                    required
+                    ref={emailInputRef}
                 />
             </div>
-            <div> {/* Обертка для поля PIN */}
+            <div>
                 <label htmlFor='pin'>Pin 4 цифры:</label>
                 <input
                     type='text'
                     id='pin'
                     value={pin}
                     pattern="\d{4}"
-                    onChange={handlePinChange} // Обработчик изменения PIN
-                    required // поле обязательно для ввода
+                    onChange={handlePinChange}
+                    required
                 />
             </div>
             <button type="submit">Войти</button>
+            <div>
+                {/* Вызываем функцию handleForgotPinRegistration при клике на ссылку */}
+                <button type="button" onClick={handleForgotPinRegistration}>Забыли PIN/Регистрация</button>
+            </div>
         </form>
     );
 };
