@@ -1,11 +1,29 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const LoginForm = () => {
+    console.log('LoginForm монтируется', Date.now()); // Выводим сообщение с временной меткой
+    // Используем хук useLocation для получения объекта location из React Router(получаем даннные с другой страницы)
+    const location = useLocation();
+
+    // Проверяем, есть ли данные в состоянии location.state и извлекаем их
+    const responseForgotPin = location.state && location.state.serverResponse;
+    console.log(responseForgotPin)
+
     const navigate = useNavigate(); // Используем useNavigate() для получения функции навигации
-    const [email, setEmail] = useState('');
+    let emailResp = '';
+    //вставка корректных значений в поле емайл
+    if (typeof responseForgotPin === 'object' && responseForgotPin !== null) {
+        emailResp = responseForgotPin.respEmail;
+    } else {
+        emailResp = responseForgotPin || '';
+    }
+    const messageResp = responseForgotPin && responseForgotPin.message ? responseForgotPin.message : '';
+
+    const [email, setEmail] = useState(emailResp);
     const [pin, setPin] = useState('');
     const emailInputRef = useRef(null);
+
 
     useEffect(() => {
         emailInputRef.current.focus();
@@ -48,37 +66,46 @@ const LoginForm = () => {
         navigate('/forgot-pin-registration'); // Перенаправляем пользователя на /forgot-pin-registration
     };
 
+
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label htmlFor="email">Email:</label>
-                <input
-                    type="email"
-                    id="email"
-                    value={email}
-                    pattern='[^\s@]+@[^\s@]+\.[^\s@]+'
-                    onChange={handleEmailChange}
-                    required
-                    ref={emailInputRef}
-                />
-            </div>
-            <div>
-                <label htmlFor='pin'>Pin 4 цифры:</label>
-                <input
-                    type='text'
-                    id='pin'
-                    value={pin}
-                    pattern="\d{4}"
-                    onChange={handlePinChange}
-                    required
-                />
-            </div>
-            <button type="submit">Войти</button>
-            <div>
-                {/* Вызываем функцию handleForgotPinRegistration при клике на ссылку */}
-                <button type="button" onClick={handleForgotPinRegistration}>Забыли PIN/Регистрация</button>
-            </div>
-        </form>
+        <>
+            <p>{messageResp}</p>
+
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label htmlFor="email">Email:</label>
+                    <input
+                        type="email"
+                        id="email"
+                        value={email}
+                        pattern='[^\s@]+@[^\s@]+\.[^\s@]+'
+                        onChange={handleEmailChange}
+                        required
+                        ref={emailInputRef} />
+                </div>
+
+                <div>
+                    <label htmlFor='pin'>Pin 4 цифры:</label>
+                    <input
+                        type='text'
+                        id='pin'
+                        value={pin}
+                        pattern="\d{4}"
+                        onChange={handlePinChange}
+                        required />
+                </div>
+
+                <button type="submit">Войти</button>
+
+                <div>
+
+                    {/* Вызываем функцию handleForgotPinRegistration при клике на ссылку */}
+                    <button type="button" onClick={handleForgotPinRegistration}>Забыли PIN/Регистрация</button>
+                </div>
+
+            </form>
+
+        </>
     );
 };
 
