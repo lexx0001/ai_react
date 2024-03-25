@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import useAuthStatus from './useAuthStatus';
 
@@ -17,14 +17,14 @@ const AuthChecker = () => {
     }, []);
 
     // Пока выполняется проверка, возвращаем null или "крутилку"
-    if (authStatus === 'loading') {
+    if (authStatus.authStatus === 'loading') {
         return (<p>....Крутилочка....</p>);
     }
 
     // После завершения проверки авторизации, возвращаем соответствующий редирект
-    if (authStatus === 'authorized') {
-        return <Navigate to="/error" />;
-    } else if (authStatus === 'unauthorized') {
+    if (authStatus.authStatus === 'authorized') {
+        return <Navigate to="/main_page" />;
+    } else if (authStatus.authStatus === 'unauthorized') {
         return <Navigate to="/login" />;
     } else {
         return <Navigate to="/error" />;

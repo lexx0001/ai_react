@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const LoginForm = () => {
-    console.log('LoginForm монтируется', Date.now()); // Выводим сообщение с временной меткой
+
     // Используем хук useLocation для получения объекта location из React Router(получаем даннные с другой страницы)
     const location = useLocation();
 
@@ -18,11 +18,11 @@ const LoginForm = () => {
     } else {
         emailResp = responseForgotPin || '';
     }
-    const messageResp = responseForgotPin && responseForgotPin.message ? responseForgotPin.message : '';
-
+    const [messageResp, setMessageResp] = useState(responseForgotPin && responseForgotPin.message ? responseForgotPin.message : '');
     const [email, setEmail] = useState(emailResp);
     const [pin, setPin] = useState('');
     const emailInputRef = useRef(null);
+
 
 
     useEffect(() => {
@@ -52,13 +52,19 @@ const LoginForm = () => {
                 body: formData
             });
 
-            if (!response.ok) {
-                throw new Error('Ошибка сети - ответ не ок');
+
+            if (response.status === 401) {
+                setMessageResp('Ошибка авторизации. Проверьте правильность введённых данных.');
+            } else if (!response.ok) {
+                throw new Error('Ошибка сети');
+            } else {
+                navigate('/main_page');
             }
 
-            console.log('Ответ сервера: ', await response.json());
+            // console.log('Ответ сервера: ', await response.json());
         } catch (error) {
             console.error('Произошла ошибка при выполнении операции с помощью fetch ', error);
+            setMessageResp(error.message);
         }
     };
 
@@ -69,7 +75,7 @@ const LoginForm = () => {
 
     return (
         <>
-            <p>{messageResp}</p>
+            <div>{messageResp}</div>
 
             <form onSubmit={handleSubmit}>
                 <div>

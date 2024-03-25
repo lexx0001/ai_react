@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import LoginForm from './components/pages/LoginForm';
-import ForgotPinRegistration from './components/pages/ForgotPinRegistration';
+import LoginForm from './pages/LoginForm';
+import ForgotPinRegistration from './pages/ForgotPinRegistration';
 import AuthChecker from './components/AuthChecker';
-import MainPage from './components/pages/MainPage';
-import ErrorPage from './components/pages/ErrorPage';
+import MainPage from './pages/MainPage';
+import ErrorPage from './pages/ErrorPage';
 
 const App = () => {
   return (
