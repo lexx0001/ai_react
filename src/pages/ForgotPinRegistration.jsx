@@ -5,6 +5,8 @@ const ForgotPinRegistration = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [serverResponse, setServerResponse] = useState(null); // Состояние для хранения ответа от сервера
+    const [isLoading, setIsLoading] = useState(false); // Состояние для отслеживания загрузки данных
+    const [errServer, setErrServer] = useState(false);  // Состояние для отслеживания вывода сообщения об ошибке
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
@@ -13,9 +15,9 @@ const ForgotPinRegistration = () => {
     const handleForgotPinSubmit = async (event) => {
         event.preventDefault();
         // Логика для восстановления PIN
-
+        setErrServer(false);
         try {
-            console.log('Отправляем email:', email);
+            setIsLoading(true); // Устанавливаем isLoading в true перед отправкой запроса
 
             const formData = new FormData();
             formData.append('email', email);
@@ -33,6 +35,9 @@ const ForgotPinRegistration = () => {
         } catch (error) {
             console.error('Произошла ошибка при выполнении операции с помощью fetch ', error);
             setServerResponse({ success: false, message: 'Произошла ошибка при выполнении операции' });
+            setErrServer(true);
+        } finally {
+            setIsLoading(false); // Устанавливаем isLoading в false после завершения запроса, независимо от результата
         }
     };
 
@@ -46,7 +51,6 @@ const ForgotPinRegistration = () => {
 
 
     return (
-
         <>
             <h2>Восстановление PIN / Регистрация</h2>
             <form onSubmit={handleForgotPinSubmit}>
@@ -61,10 +65,12 @@ const ForgotPinRegistration = () => {
                         onChange={handleEmailChange}
                         required />
                 </div>
-                <button type='submit'>Ввод</button>
+                {/* Крутилочка будет отображаться, если isLoading равен true */}
+                {isLoading ? <p>....Крутилочка....</p> : <button type='submit'>Ввод</button>}
+                {errServer ? <p>Ошибка отправки email. Попробуйте ещё раз.</p> : <p></p>}
+
             </form>
         </>
-
     );
 };
 

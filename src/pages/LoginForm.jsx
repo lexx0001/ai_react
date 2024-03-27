@@ -105,7 +105,7 @@ const LoginForm = () => {
 
                 <div>
 
-                    {/* Вызываем функцию handleForgotPinRegistration при клике на ссылку */}
+                    {/* Вызываем функцию handleForgotPinRegistration */}
                     <button type="button" onClick={handleForgotPinRegistration}>Забыли PIN/Регистрация</button>
                 </div>
 
