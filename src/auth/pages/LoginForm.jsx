@@ -1,5 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import AuthButton from '../components/UI/button/AuthButton';
+import AuthInput from '../components/UI/input/AuthInput';
+import AuthContainer from '../components/UI/conteiner/AuthContainer';
+import MessageText from '../components/UI/message/MessageText';
+import FormStyle from '../components/UI/formstyle/FormStyle';
 
 const LoginForm = () => {
 
@@ -74,13 +79,13 @@ const LoginForm = () => {
 
 
     return (
-        <>
-            <div>{messageResp}</div>
+        <AuthContainer>
+            <MessageText>{messageResp}</MessageText>
 
-            <form onSubmit={handleSubmit}>
+            <FormStyle onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor="email">Email:</label>
-                    <input
+                    <AuthInput
+                        placeholder='email'
                         type="email"
                         id="email"
                         value={email}
@@ -91,27 +96,29 @@ const LoginForm = () => {
                 </div>
 
                 <div>
-                    <label htmlFor='pin'>Pin 4 цифры:</label>
-                    <input
+                    <AuthInput
+                        placeholder='PIN'
                         type='text'
                         id='pin'
                         value={pin}
                         pattern="\d{4}"
+                        maxLength="4"
                         onChange={handlePinChange}
                         required />
                 </div>
 
-                <button type="submit">Войти</button>
+                <AuthButton type="submit">Войти</AuthButton>
 
                 <div>
 
                     {/* Вызываем функцию handleForgotPinRegistration */}
-                    <button type="button" onClick={handleForgotPinRegistration}>Забыли PIN/Регистрация</button>
+                    <AuthButton type="button" onClick={handleForgotPinRegistration}>Забыли PIN/Регистрация</AuthButton>
+
                 </div>
 
-            </form>
+            </FormStyle>
 
-        </>
+        </AuthContainer>
     );
 };
 

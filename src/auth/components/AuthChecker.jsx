@@ -7,13 +7,6 @@ const AuthChecker = () => {
 
     const authStatus = useAuthStatus();
 
-    // useEffect(() => {
-    //     const checkAuthStatus = async () => {
-    //         console.log(authStatus);
-    //     };
-    //     checkAuthStatus();
-    // }, []);
-
     // Пока выполняется проверка, возвращаем null или "крутилку"
     if (authStatus.authStatus === 'loading') {
         return (<p>....Крутилочка....</p>);

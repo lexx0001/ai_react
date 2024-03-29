@@ -1,0 +1,11 @@
+.authBtn {
+    padding: 3px 15px;
+
+    color: teal;
+    font-size: 14px;
+    background: #e9e6ae;
+    border: 1px solid teal;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+}

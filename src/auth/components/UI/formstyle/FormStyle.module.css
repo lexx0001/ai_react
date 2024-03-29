@@ -1,0 +1,10 @@
+.formStyle {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-content: stretch;
+    align-items: flex-end;
+    height: 260px;
+    width: 370px;
+}

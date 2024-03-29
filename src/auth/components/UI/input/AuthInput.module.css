@@ -1,0 +1,10 @@
+.authInput {
+    width: 230px;
+    padding: 3px 8px;
+    margin: 5px;
+    font-size: 16px;
+    background: transparent;
+    border-radius: 5px;
+    color: rgb(170, 132, 8);
+    border: 1px solid teal;
+}

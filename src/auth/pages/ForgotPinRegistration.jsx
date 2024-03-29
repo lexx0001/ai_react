@@ -1,5 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AuthButton from '../components/UI/button/AuthButton';
+import AuthInput from '../components/UI/input/AuthInput';
+import classes from '../components/UI/title/TitleText.module.css';
+import AuthContainer from '../components/UI/conteiner/AuthContainer';
+import MessageText from '../components/UI/message/MessageText';
+import FormStyle from '../components/UI/formstyle/FormStyle';
+
 
 const ForgotPinRegistration = () => {
     const navigate = useNavigate();
@@ -7,6 +14,10 @@ const ForgotPinRegistration = () => {
     const [serverResponse, setServerResponse] = useState(null); // Состояние для хранения ответа от сервера
     const [isLoading, setIsLoading] = useState(false); // Состояние для отслеживания загрузки данных
     const [errServer, setErrServer] = useState(false);  // Состояние для отслеживания вывода сообщения об ошибке
+    const emailInputRef = useRef(null);
+    useEffect(() => {
+        emailInputRef.current.focus();
+    }, []);
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
@@ -51,26 +62,27 @@ const ForgotPinRegistration = () => {
 
 
     return (
-        <>
-            <h2>Восстановление PIN / Регистрация</h2>
-            <form onSubmit={handleForgotPinSubmit}>
+        <AuthContainer>
+
+            <FormStyle onSubmit={handleForgotPinSubmit}>
                 {/* Форма для восстановления PIN */}
+                <p className={classes.titleText}>Восстановление PIN / Регистрация</p>
                 <div>
-                    <label htmlFor='email'>Email</label>
-                    <input type="email"
+                    <AuthInput type="email"
+                        placeholder='email'
                         name="email"
                         id="email"
                         value={email}
                         pattern='[^\s@]+@[^\s@]+\.[^\s@]+'
                         onChange={handleEmailChange}
-                        required />
+                        required
+                        ref={emailInputRef} />
                 </div>
                 {/* Крутилочка будет отображаться, если isLoading равен true */}
-                {isLoading ? <p>....Крутилочка....</p> : <button type='submit'>Ввод</button>}
-                {errServer ? <p>Ошибка отправки email. Попробуйте ещё раз.</p> : <p></p>}
-
-            </form>
-        </>
+                {isLoading ? <p>....Крутилочка....</p> : <AuthButton type='submit'>Ввод</AuthButton>}
+            </FormStyle>
+            {errServer ? <MessageText>Ошибка отправки email. Попробуйте ещё раз.</MessageText> : <MessageText></MessageText>}
+        </AuthContainer>
     );
 };
 
