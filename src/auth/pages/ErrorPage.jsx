@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import useAuthStatus from '../components/useAuthStatus';
+import SpinnerOne from '../components/UI/spinners/SpinnerOne';
 
 const ErrorPage = () => {
-    const { authStatus, jwt } = useAuthStatus();
+    const { authStatus } = useAuthStatus();
     const [count, setCount] = useState(0);
 
     useEffect(() => {
@@ -25,12 +26,12 @@ const ErrorPage = () => {
     };
 
     return (
-        <div>
+        <div style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', display: 'flex', fontSize: '21px', color: '#e24f2b' }}>
             <h1>Error Page</h1>
             <p>Auth Status: {authStatus}</p>
-            <p>JWT: {jwt}</p>
-            <p>count: {count}</p>
-        </div>
+            <p>connection attempt: {count}</p>
+            <SpinnerOne />
+        </div >
     );
 
 };

@@ -11,13 +11,13 @@ const useAuthStatus = () => {
             try {
                 const response = await fetch('/check-auth-status');
                 console.log(response.status)
-                console.log(response.headers)
-                if (response.status === 200) {
+                // console.log(response.headers)
+                if (response.status === 201) {//Здесь должно быть 201 
                     setAuthStatus('authorized'); //Здесь должно быть 'authorized'!!!!!!!
                 } else if (response.status === 401) {
                     setAuthStatus('unauthorized');
                 } else {
-                    setAuthStatus('error');
+                    setAuthStatus('connection error');
                 }
 
             } catch (error) {

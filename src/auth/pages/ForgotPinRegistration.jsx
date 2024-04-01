@@ -6,6 +6,7 @@ import classes from '../components/UI/title/TitleText.module.css';
 import AuthContainer from '../components/UI/conteiner/AuthContainer';
 import MessageText from '../components/UI/message/MessageText';
 import FormStyle from '../components/UI/formstyle/FormStyle';
+import SpinnerOne from '../components/UI/spinners/SpinnerOne';
 
 
 const ForgotPinRegistration = () => {
@@ -79,7 +80,7 @@ const ForgotPinRegistration = () => {
                         ref={emailInputRef} />
                 </div>
                 {/* Крутилочка будет отображаться, если isLoading равен true */}
-                {isLoading ? <p>....Крутилочка....</p> : <AuthButton type='submit'>Ввод</AuthButton>}
+                {isLoading ? <SpinnerOne /> : <AuthButton type='submit'>Ввод</AuthButton>}
             </FormStyle>
             {errServer ? <MessageText>Ошибка отправки email. Попробуйте ещё раз.</MessageText> : <MessageText></MessageText>}
         </AuthContainer>
