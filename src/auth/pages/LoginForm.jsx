@@ -27,6 +27,8 @@ const LoginForm = () => {
     const [email, setEmail] = useState(emailResp);
     const [pin, setPin] = useState('');
     const emailInputRef = useRef(null);
+    const [previousEmail, setPreviousEmail] = useState('');
+    const [previousPin, setPreviousPin] = useState('');
 
 
 
@@ -45,9 +47,17 @@ const LoginForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
+            // Проверяем, совпадают ли новые значения с предыдущими
+            if (email === previousEmail && pin === previousPin) {
+                // Если значения совпадают, не отправляем запрос на сервер
+                return;
+            }
+            // Сохраняем новые значения в качестве предыдущих
+            setPreviousEmail(email);
+            setPreviousPin(pin);
+
             console.log('Отправляем email:', email);
             console.log('Отправляем pin:', pin);
-
             const formData = new FormData();
             formData.append('email', email);
             formData.append('pin', pin);
