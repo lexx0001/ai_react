@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import LoginForm from './auth/pages/LoginForm';
 import ForgotPinRegistration from './auth/pages/ForgotPinRegistration';
 import AuthChecker from './auth/components/AuthChecker';
-import MainPage from './auth/pages/MainPage';
+import MainPage from './general/MainPage';
 import ErrorPage from './auth/pages/ErrorPage';
 
 const App = () => {

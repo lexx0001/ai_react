@@ -7,7 +7,7 @@ import SpinnerOne from './UI/spinners/SpinnerOne';
 
 const AuthChecker = () => {
 
-    const authStatus = useAuthStatus();
+    const { authStatus } = useAuthStatus();
 
     // Пока выполняется проверка, возвращаем null или "крутилку"
     if (authStatus.authStatus === 'loading') {

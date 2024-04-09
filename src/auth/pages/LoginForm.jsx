@@ -80,6 +80,8 @@ const LoginForm = () => {
         } catch (error) {
             console.error('Произошла ошибка при выполнении операции с помощью fetch ', error);
             setMessageResp(error.message);
+            setPreviousEmail('');
+            setPreviousPin('');
         }
     };
 
